@@ -15,7 +15,6 @@ export default function MatchTable({
   onOpenEdit,
   onOpenDelete,
 }) {
-  // 1. Filtrado local sobre los datos
   const filteredMatches = matches.filter((item) => {
     const matchesText =
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -24,7 +23,6 @@ export default function MatchTable({
     return matchesText && matchesCat;
   });
 
-  // 2. Cálculos de paginación
   const totalRecords = filteredMatches.length;
   const totalPages = Math.max(1, Math.ceil(totalRecords / limit));
   const safePage = Math.min(currentPage, totalPages);
@@ -36,7 +34,7 @@ export default function MatchTable({
       case 'Acertada':
         return 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30';
       case 'En vivo':
-        return 'bg-amber-500/15 text-amber-400 border-amber-500/30';
+        return 'bg-amber-500/15 text-amber-400 border-amber-500/30 animate-pulse';
       case 'Fallada':
         return 'bg-red-500/15 text-red-400 border-red-500/30';
       default:
@@ -46,15 +44,18 @@ export default function MatchTable({
 
   return (
     <div className="rounded-2xl bg-[#1E293B] border border-[#334155] overflow-hidden">
-      {/* Cabecera de la tabla y controles de filtro */}
       <div className="p-6 border-b border-[#334155] flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white">Pronósticos de partidos</h2>
-          <p className="text-xs text-[#94A3B8]">{totalRecords} partidos encontrados</p>
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-bold text-white">Pronósticos de partidos</h2>
+            <span className="px-2 py-0.5 rounded-md bg-red-500/15 border border-red-500/30 text-red-400 text-[10px] font-bold uppercase tracking-wider">
+              ESPN Live API
+            </span>
+          </div>
+          <p className="text-xs text-[#94A3B8]">{totalRecords} partidos reales encontrados</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          {/* Buscador por texto */}
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -64,12 +65,11 @@ export default function MatchTable({
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="Buscar equipo o partido..."
+              placeholder="Buscar club o partido..."
               className="pl-9 pr-4 py-2 rounded-xl bg-[#0F172A] border border-[#334155] text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#10B981]"
             />
           </div>
 
-          {/* Filtro por Categoría / Liga */}
           <select
             value={selectedCategory}
             onChange={(e) => {
@@ -86,7 +86,6 @@ export default function MatchTable({
             ))}
           </select>
 
-          {/* Botón Agregar Registro (CRUD) */}
           <button
             onClick={onOpenAdd}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#10B981] hover:bg-[#059669] text-slate-950 font-bold text-sm transition cursor-pointer"
@@ -97,14 +96,13 @@ export default function MatchTable({
         </div>
       </div>
 
-      {/* Tabla */}
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-[#334155] text-[11px] font-semibold uppercase tracking-wider text-[#94A3B8] bg-[#0F172A]/40">
-              <th className="py-3.5 px-6">Partido</th>
-              <th className="py-3.5 px-4">Liga / Categoría</th>
-              <th className="py-3.5 px-4">Fecha</th>
+              <th className="py-3.5 px-6">Partido (ESPN Oficial)</th>
+              <th className="py-3.5 px-4">Liga</th>
+              <th className="py-3.5 px-4">Fecha / Hora</th>
               <th className="py-3.5 px-4">Ganador Previsto</th>
               <th className="py-3.5 px-4">Probabilidad</th>
               <th className="py-3.5 px-4">Estado</th>
@@ -115,14 +113,32 @@ export default function MatchTable({
             {paginatedMatches.length === 0 ? (
               <tr>
                 <td colSpan="7" className="py-12 text-center text-[#94A3B8]">
-                  No se encontraron registros que coincidan con los filtros.
+                  No se encontraron partidos que coincidan con los filtros.
                 </td>
               </tr>
             ) : (
               paginatedMatches.map((item) => (
                 <tr key={item.id} className="hover:bg-[#0F172A]/40 transition">
-                  <td className="py-4 px-6 font-semibold text-white">{item.title}</td>
-                  <td className="py-4 px-4 text-[#94A3B8] capitalize">{item.category}</td>
+                  <td className="py-4 px-6 font-semibold text-white">
+                    <div className="flex items-center gap-3">
+                      {item.localLogo && (
+                        <img
+                          src={item.localLogo}
+                          alt={item.localName}
+                          className="w-6 h-6 object-contain"
+                        />
+                      )}
+                      <span>{item.title}</span>
+                      {item.awayLogo && (
+                        <img
+                          src={item.awayLogo}
+                          alt={item.awayName}
+                          className="w-6 h-6 object-contain"
+                        />
+                      )}
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-[#94A3B8]">{item.category}</td>
                   <td className="py-4 px-4 text-[#94A3B8]">{item.fecha}</td>
                   <td className="py-4 px-4 font-medium text-slate-200">{item.ganadorPrevisto}</td>
                   <td className="py-4 px-4">
@@ -151,14 +167,14 @@ export default function MatchTable({
                     <div className="inline-flex items-center gap-2">
                       <button
                         onClick={() => onOpenEdit(item)}
-                        title="Editar registro"
+                        title="Editar pronóstico"
                         className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition cursor-pointer"
                       >
                         <Pencil className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => onOpenDelete(item)}
-                        title="Eliminar registro"
+                        title="Eliminar pronóstico"
                         className="p-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-400 transition cursor-pointer"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -172,7 +188,6 @@ export default function MatchTable({
         </table>
       </div>
 
-      {/* Controles de Paginación (10, 20, 40, 50) + Indicador de Página */}
       <div className="p-5 border-t border-[#334155] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94A3B8]">
         <div className="flex items-center gap-3">
           <span>Filas por página:</span>
