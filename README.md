@@ -57,3 +57,16 @@ Si deseas correr este proyecto en tu entorno local:
 1. Clona este repositorio:
    ```bash
    git clone [https://github.com/yahelaleman1904-blip/t3_act8_eq01.git](https://github.com/yahelaleman1904-blip/t3_act8_eq01.git)
+
+
+Imágenes DE Nuestro Apartado Figma
+
+Loggin
+<img width="790" height="548" alt="image" src="https://github.com/user-attachments/assets/40e76b85-e3b6-499f-bb57-d27ac5d3c95c" />
+
+Area de Predicciones
+<img width="785" height="657" alt="image" src="https://github.com/user-attachments/assets/d2054140-0f9a-4d1c-a106-9e4a3e549043" />
+
+Area de Partidos
+<img width="832" height="568" alt="image" src="https://github.com/user-attachments/assets/2f58c3f7-6769-476d-9a74-f70570bcc927" />
+
