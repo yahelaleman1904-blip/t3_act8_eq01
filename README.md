@@ -48,6 +48,9 @@ Pronostika es una plataforma web interactiva diseñada para la gestión, anális
 ---
 
 ##  APIs Utilizadas
+Para lograr un sistema visualmente realista pero funcional a nivel de escritura, se implementó una estrategia dual:
+1. **ESPN Sports API (`site.api.espn.com`):** Utilizada exclusivamente para lectura (`GET`). Provee el listado de partidos, nombres oficiales, ligas y logotipos de los clubes en tiempo real.
+2. **DummyJSON (`dummyjson.com`):** Utilizada como motor de backend simulado para cumplir con las peticiones de escritura. Maneja la validación del Login, registro de usuarios (`/users/add`) y el CRUD de pronósticos mapeando los partidos a la ruta de productos (`/products`).
 
 Si deseas correr este proyecto en tu entorno local:
 
