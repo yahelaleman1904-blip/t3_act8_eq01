@@ -1,21 +1,22 @@
-# Pronostika - Sistema de Predicciones Deportivas
+#  Pronostika - Sistema de Predicciones Deportivas
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![DigitalOcean](https://img.shields.io/badge/DigitalOcean-0080FF?style=for-the-badge&logo=DigitalOcean&logoColor=white)
+![ESPN API](https://img.shields.io/badge/ESPN_Live_API-CC0000?style=for-the-badge&logo=espn&logoColor=white)
 
-Pronostika es una plataforma web interactiva diseñada para la gestión, análisis y registro de pronósticos deportivos. Construida como una Single Page Application (SPA) moderna, simula un entorno completo de autenticación y operaciones CRUD reales consumiendo APIs externas.
-
----
-
-## Enlaces del Proyecto
-
-- * Sistema Desplegado (VPS DigitalOcean):** [http://67.205.143.251/t3_act8_eq01/](http://67.205.143.251/t3_act8_eq01/)
+Pronostika es una plataforma web interactiva diseñada para la gestión, análisis y registro de pronósticos deportivos. Construida como una Single Page Application (SPA) moderna, simula un entorno completo de autenticación y operaciones CRUD reales consumiendo datos deportivos en vivo y APIs externas.
 
 ---
 
-## Equipo 01 (Desarrolladores)
+##  Enlaces del Proyecto
+
+- ** Sistema Desplegado (VPS DigitalOcean):** [http://67.205.143.251/t3_act8_eq01/](http://67.205.143.251/t3_act8_eq01/)
+
+---
+
+##  Equipo 01 (Desarrolladores)
 
 - **Carlos Yahel Alemán Cruz** 
 - **Mario Eduardo Grajales Ramírez** 
@@ -24,37 +25,29 @@ Pronostika es una plataforma web interactiva diseñada para la gestión, anális
 
 ---
 
-## Características Implementadas (Rúbrica)
+##  Características Implementadas (Rúbrica)
 
 1. ** Autenticación (Fase 1):** 
    - Login funcional con validación de formularios y manejo de errores.
-   - Consumo de API real para autenticación (`POST`).
-   - Opción de registro de nuevos usuarios y login social simulado.
+   - Consumo de API para autenticación (`POST`) y registro de usuarios nuevos.
+   - Modal interactivo para simulación de Login Social (Google / GitHub).
 2. ** Interfaz y Navegación (Fase 2):** 
-   - Diseño moderno UI/UX basado en Figma (Pantalla dividida).
+   - Diseño UI/UX profesional (Dark Mode, Pantalla dividida, Componentización).
    - Sidebar interactivo y Navbar dinámico que refleja los datos del usuario logueado.
-   - Rutas protegidas (No se puede acceder al sistema sin iniciar sesión).
-3. ** Gestión de Datos CRUD (Fase 3):** 
-   - **Tabla Interactiva:** Buscador por texto y filtro por categorías.
-   - **Paginación URL Sync:** Paginación dinámica (10, 20, 40, 50 registros) sincronizada bidireccionalmente con los parámetros de la URL (`?page=1&limit=10`).
-   - **Operaciones CRUD:** Creación (`POST`), Edición (`PUT`) con confirmación, y Eliminación (`DELETE`) con modal de advertencia, reflejando los cambios inmediatamente en el estado global.
+   - Rutas protegidas mediante validación de estado.
+3. ** Arquitectura Híbrida de Datos y CRUD (Fase 3):** 
+   - **Lectura en Vivo (GET):** Integración con la API oficial de ESPN para mostrar partidos reales, horarios, ligas y escudos oficiales de la jornada actual.
+   - **Tabla Interactiva:** Buscador por texto, filtro por categorías y tarjetas dinámicas.
+   - **Paginación URL Sync:** Paginación (10, 20, 40, 50 registros) sincronizada bidireccionalmente con la URL (`?page=1&limit=10`).
+   - **Operaciones CRUD:** Para cumplir con la rúbrica de escritura, al Crear (`POST`), Editar (`PUT`) o Eliminar (`DELETE`) un pronóstico de la cartelera, el sistema dispara peticiones HTTP reales hacia la API de DummyJSON, reflejando inmediatamente el estado local.
 4. ** Despliegue en VPS (Fase 4):**
    - Aplicación compilada optimizada para producción (`dist`).
    - Servidor web Nginx configurado en Ubuntu 24.04 (DigitalOcean).
-   - Soporte para subrutas (`/t3_act8_eq01/`).
+   - Soporte para subrutas y recargas nativas (`/t3_act8_eq01/`).
 
 ---
 
-##  API Utilizada
-
-Para cumplir con los requerimientos de la tabla interactiva y las peticiones de escritura (`POST`, `PUT`, `DELETE`), se utilizó **DummyJSON**. 
-Los datos genéricos fueron mapeados, transformados y adaptados lógicamente en el Frontend (`services/api.js`) para encajar en el contexto deportivo de Pronostika:
-- **Autenticación:** `https://dummyjson.com/auth/login` y `https://dummyjson.com/users/add`
-- **Productos (Adaptados a Partidos):** `https://dummyjson.com/products`
-
----
-
-##  Instalación y Uso Local
+##  APIs Utilizadas
 
 Si deseas correr este proyecto en tu entorno local:
 
